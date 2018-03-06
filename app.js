@@ -5,27 +5,9 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
+const mongoose = require("./db/mongoose");
 const Data = require("./models/data");
 
-const dbURI = "mongodb://localhost:27017/VotingApp";
-mongoose.connect(dbURI);
-mongoose.Promise = global.Promise;
-// CONNECTION EVENTS
-// When successfully connected
-mongoose.connection.on("connected", function() {
-  console.log("Mongoose default connection open to " + dbURI);
-});
-
-// If the connection throws an error
-mongoose.connection.on("error", function(err) {
-  console.log("Mongoose default connection error: " + err);
-});
-
-// When the connection is disconnected
-mongoose.connection.on("disconnected", function() {
-  console.log("Mongoose default connection disconnected");
-});
 
 const app = express();
 
