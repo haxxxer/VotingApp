@@ -1,0 +1,88 @@
+<% include ./partials/header%>
+
+
+  <br>
+  <form action="/" method="POST">
+    <br>
+    <h2 class="text-center title">Voting App For 424 1st Exam</h2><br>
+    <div class="form-group row">
+       
+      <div class="offset-md-3 col-md-6">
+          <% if(alert) {%>
+  
+            <div class="alert alert-danger" role="alert">
+                Student associated to this id has already voted!
+            </div>
+          <%}%>
+        <label for="ausID">* AUS ID</label>
+        <input type="text" class="form-control" id="ausID" aria-describedby="emailHelp" name="obj[id]" placeholder="ex: 55993">
+        <small id="emailHelp" class="form-text text-muted">I'll never share your ID with anyone else.</small>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="offset-md-3 col-md-6">
+        <p>* Do you agree on postponing the exam?</p>
+
+        <div class="form-check">
+          <div class="row">
+            <div class="col-md-2">
+              <input class="form-check-input" type="radio" name="obj[doAgree]" id="gridRadios1" value="1" checked onclick="toggleShow()">
+              <label class="form-check-label" for="gridRadios1">
+                Yes
+              </label>
+            </div>
+            <div class="col-md-2">
+              <input class="form-check-input" type="radio" name="obj[doAgree]" id="gridRadios2" value="0" no onclick="toggleShow()">
+              <label class="form-check-label" for="gridRadios2">
+                No
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+   
+    <div class="row form-group" id="date">
+
+      <div class="offset-md-3 col-md-6">
+        <label for="dateOptinos">* Choose your preffered date</label>
+        <select class="custom-select" name="obj[day]" id="dateOptinos">
+            <option></option>
+          <option value="1"> Monday 19th</option>
+          <option value="2">Wednesday 21st</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row form-group" id="reason" style="display:none">
+      <div class="offset-md-3 col-md-6">
+        <label for="selectReason">* Reason for disagreeing: </label>
+        <select class="custom-select" name="obj[reason]" id="selectReason">
+          <option></option>
+          <option value="1">Time conflict with another exam</option>
+          <option value="2">Not ready to change my study plan</option>
+          <option value="3">I'll keep my reason to myself (fucker!)</option>
+        </select>
+      </div>
+    </div>
+    <br>
+    <div class="row form-group">
+      <div class="offset-md-3 col-md-6">
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Comment</label>
+          <textarea name="obj[comment]" class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Put any comment that you would like to share. This note will be shown in the result page"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="offset-md-3 col-md-6">
+        <button class="btn btn-danger sendButton   btn-block">Submit</button>
+      </div>
+    </div>
+  </form>
+
+
+  <% include ./partials/footer%>

@@ -1,0 +1,194 @@
+<% include ./partials/header%>
+
+
+  <% 
+let agreeOnMonday = 0;
+let agreeOnWednesday = 0;
+let disagree = 0;
+let reasonOne= 0;
+let reasonTwo= 0;
+let reasonThree= 0;
+let status = "";
+let voters = [];
+let comments = [];
+  docs.forEach((doc) => {
+    if(doc.comment) {
+      comments.push({id: doc.id, comment: doc.comment})
+    }
+    if(doc.doAgree && doc.day == 1) {
+      agreeOnMonday++
+      status = "Agree on Monday";
+    } else if (doc.doAgree && doc.day == 2) {
+      agreeOnWednesday++
+      status = "Agree on Wednesday"
+    } else {
+      disagree++; 
+      status = "Disagreed"
+      if(doc.reason === 1) {
+        reasonOne++;
+      } else if(doc.reason === 2) {
+        reasonTwo++;
+      } else if(doc.reason === 3) {
+        reasonThree++;
+      }
+    }
+
+    voters.push({id: doc.id, status: ""})
+  })
+
+
+%>
+
+
+    <div class="row">
+
+      <div class="col-md-3">
+        <br>
+        <br>
+        <div class="list-group">
+          <button type="button" class="list-group-item list-group-item-action active bg-primary">
+            Voters IDs (
+            <%= (34 - voters.length)%> votes missing)
+          </button>
+          <% if(voters.length === 0) {%>
+            <button type="button" class="list-group-item list-group-item-action">No votes exist so far</button>
+
+            <%}%>
+              <% for(var i=0;i<voters.length; i++){ %>
+
+                <% } %>
+
+        </div>
+      </div>
+      <div class="offset-md-1 col-md-8">
+        <div class="row">
+          <div class="col-md-6">
+            <canvas style="color: white!" id="myChart" width="500" height="400"></canvas>
+          </div>
+          <div class="col-md-6">
+            <canvas id="myChart2" width="500" height="400"></canvas>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <br>
+            <div class="list-group">
+              <button type="button" class="list-group-item list-group-item-action active bg-primary">
+                Comments Blog
+              </button>
+              <% if(comments.length === 0) {%>
+                <button type="button" class="list-group-item list-group-item-action">No comments exist so far</button>
+
+                <%}%>
+                  <% for(var i=0;i<comments.length; i++){ %>
+                    <button type="button" class="list-group-item list-group-item-action">
+                      <strong>@
+                        <%=comments[i].id%>
+                      </strong>says:
+                      <%= comments[i].comment%>
+                    </button>
+                    <% } %>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <script src="/js/Chart.min.js"></script>
+    <script>
+      var agreeOnMonday = <%= agreeOnMonday %>
+      var agreeOnWednesday = <%= agreeOnWednesday %>
+  var disagree = <%= disagree %>
+  var nofVoters = <%= voters.length%>
+    var ctx = document.getElementById("myChart").getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ["Agree on Monday", "Agree on Wednesday", "Disagree"],
+          datasets: [{
+            label: '# of Votes',
+            data: [agreeOnMonday, agreeOnWednesday, disagree],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+
+
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 0.2)',
+
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          legend: {
+            labels: {
+              fontColor: "white",
+
+            }
+          },
+          "responsive": true,
+          "maintainAspectRatio": false,
+          title: {
+            fontColor: "white",
+            display: true,
+            text: "Postponing Exam Voting Results => #" + nofVoters + " votes"
+          },
+
+        }
+      });
+
+      var reasonOne = <%= reasonOne %>
+  var reasonTwo = <%= reasonTwo %>
+  var reasonThree = <%= reasonThree %>
+      var ctx2 = document.getElementById("myChart2").getContext('2d');
+      var myChart2 = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+          labels: ["Time conflict", "Cant change my study plan", "Personal Reason"],
+          datasets: [{
+            label: '# of Votes',
+            data: [reasonOne, reasonTwo, reasonThree],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 0.2)',
+
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          legend: {
+            labels: {
+              fontColor: "white",
+
+            }
+          },
+          "responsive": true,
+          "maintainAspectRatio": false,
+          title: {
+            display: true,
+            text: "Reasons of Disagreement => #" + disagree,
+            fontColor: "white"
+          },
+
+        }
+      });
+    </script>
+    <% include ./partials/footer%>
