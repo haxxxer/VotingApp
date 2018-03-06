@@ -4,6 +4,7 @@
   <% 
 let agreeOnMonday = 0;
 let agreeOnWednesday = 0;
+let agreeOnEither = 0;
 let disagree = 0;
 let reasonOne= 0;
 let reasonTwo= 0;
@@ -20,6 +21,9 @@ let comments = [];
       status = "Agree on Monday";
     } else if (doc.doAgree && doc.day == 2) {
       agreeOnWednesday++
+      status = "Agree on Wednesday"
+    } else if (doc.doAgree && doc.day == 3) {
+      agreeOnEither++
       status = "Agree on Wednesday"
     } else {
       disagree++; 
@@ -103,20 +107,23 @@ let comments = [];
     <script>
       var agreeOnMonday = <%= agreeOnMonday %>
       var agreeOnWednesday = <%= agreeOnWednesday %>
+      var agreeOnEither = <%= agreeOnEither %>
   var disagree = <%= disagree %>
   var nofVoters = <%= voters.length%>
     var ctx = document.getElementById("myChart").getContext('2d');
       var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-          labels: ["Agree on Monday", "Agree on Wednesday", "Disagree"],
+          labels: ["Agree on Monday", "Agree on Wednesday", "Agree on Either day", "Disagree"],
           datasets: [{
             label: '# of Votes',
-            data: [agreeOnMonday, agreeOnWednesday, disagree],
+            data: [agreeOnMonday, agreeOnWednesday,agreeOnEither, disagree],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
               'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+
 
 
             ],
@@ -124,6 +131,8 @@ let comments = [];
               'rgba(255,99,132,1)',
               'rgba(54, 162, 235, 1)',
               'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+
 
             ],
             borderWidth: 1
@@ -154,7 +163,7 @@ let comments = [];
       var myChart2 = new Chart(ctx2, {
         type: 'pie',
         data: {
-          labels: ["Time conflict", "Cant change my study plan", "Personal Reason"],
+          labels: ["Time conflict with another exam", "Can not change my study plan", "Personal Reason"],
           datasets: [{
             label: '# of Votes',
             data: [reasonOne, reasonTwo, reasonThree],
