@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const dbURI = process.env.MONGODB_URI  || "mongodb://localhost:27017/VotingApp";
-mongoose.connect(dbURI);
+//mongoose.connect(dbURI);
 mongoose.Promise = global.Promise;
 // CONNECTION EVENTS
 // When successfully connected
